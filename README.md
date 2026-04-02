@@ -78,6 +78,12 @@ flowchart TD
 
 ---
 
+## Sample Output
+
+![Terminal output showing top 5 recommendations for the pop/happy profile](images/phase3_screenshot.png)
+
+---
+
 ## Getting Started
 
 ### Setup
