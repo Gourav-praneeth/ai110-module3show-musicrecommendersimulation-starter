@@ -11,23 +11,70 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
+This version scores each song in a 10-song catalog against a user's preferred genre, mood, and energy level using a weighted rule. It ranks all songs by score and returns the top k recommendations with a plain-language explanation for each.
 
 ---
 
 ## How The System Works
 
-Explain your design in plain language.
+Real-world recommenders (like Spotify's "Discover Weekly") work by comparing what a user has liked in the past to the features of new content, then ranking by similarity. My version simulates this using a simple weighted scoring rule applied to a small song catalog.
 
-Some prompts to answer:
+**Song features used:**
+- `genre` — the primary taste signal (e.g. pop, lofi, rock)
+- `mood` — emotional context (e.g. happy, chill, intense)
+- `energy` — a 0–1 float representing how high-energy the track feels
+- `acousticness` — used as a bonus signal when the user prefers acoustic music
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+**UserProfile stores:**
+- `favorite_genre` — preferred genre string
+- `favorite_mood` — preferred mood string
+- `target_energy` — ideal energy level (0.0–1.0)
+- `likes_acoustic` — boolean preference for acoustic tracks
 
-You can include a simple diagram or bullet list if helpful.
+**Scoring Rule (per song):**
+| Signal | Points |
+|---|---|
+| Genre matches user preference | +3.0 |
+| Mood matches user preference | +2.0 |
+| Energy proximity: `(1 - \|song - user\|) × 1.5` | 0–1.5 |
+| Acousticness bonus (if `likes_acoustic`) | 0–1.0 |
+
+Genre is worth the most because it is the broadest filter — a pop fan rarely wants a metal song regardless of mood. Mood comes second. Energy uses a proximity formula so songs *close* to your preference score higher than songs at the extreme.
+
+**Ranking Rule:** All songs are scored, then sorted by score descending. The top `k` are returned as recommendations.
+
+### System Flowchart
+
+```mermaid
+flowchart TD
+    A([User Profile\nfavorite_genre, favorite_mood\ntarget_energy, likes_acoustic]) --> B[Load songs.csv\n18 songs]
+    B --> C{For each song\nin catalog}
+
+    C --> D{genre ==\nfavorite_genre?}
+    D -- Yes --> E[+3.0 pts]
+    D -- No  --> F[+0 pts]
+
+    E --> G{mood ==\nfavorite_mood?}
+    F --> G
+
+    G -- Yes --> H[+2.0 pts]
+    G -- No  --> I[+0 pts]
+
+    H --> J[Energy proximity\n1 - abs energy - target x 1.5\n0 to 1.5 pts]
+    I --> J
+
+    J --> K{likes_acoustic\n== True?}
+    K -- Yes --> L[+acousticness x 1.0\n0 to 1.0 pts]
+    K -- No  --> M[+0 pts]
+
+    L --> N[Total Score]
+    M --> N
+
+    N --> O{More songs?}
+    O -- Yes --> C
+    O -- No  --> P[Sort all songs\nby score descending]
+    P --> Q([Return Top K\nRecommendations])
+```
 
 ---
 

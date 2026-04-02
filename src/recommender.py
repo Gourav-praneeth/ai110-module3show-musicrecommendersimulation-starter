@@ -117,6 +117,10 @@ def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
         if energy_diff <= 0.15:
             reasons.append(f"energy closely matches ({song['energy']:.2f})")
 
+    if user_prefs.get("likes_acoustic") and song["acousticness"] >= 0.6:
+        score += song["acousticness"] * 1.0
+        reasons.append(f"acoustic feel ({song['acousticness']:.2f})")
+
     explanation = "Because: " + ", ".join(reasons) if reasons else "Closest overall match"
     return score, explanation
 
