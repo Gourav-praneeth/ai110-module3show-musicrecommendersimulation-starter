@@ -89,50 +89,60 @@ def load_songs(csv_path: str) -> List[Dict]:
     return songs
 
 
-def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, str]:
+def score_song(user_prefs: Dict, song: Dict, weights: Optional[Dict] = None) -> Tuple[float, str]:
     """
     Scores a single song against user preferences.
     Returns (score, explanation).
 
-    Scoring weights:
+    Default scoring weights:
       - Genre match:   +3.0  (strongest taste signal)
       - Mood match:    +2.0  (emotional context)
       - Energy proximity: (1 - |song - user|) * 1.5  (rewards closeness, not extremes)
+      - Acoustic bonus: acousticness * 1.0  (when likes_acoustic is True)
+
+    Pass a custom `weights` dict to override:
+      {"genre": float, "mood": float, "energy_scale": float, "acoustic": float}
     """
+    w_genre = weights.get("genre", 3.0) if weights else 3.0
+    w_mood = weights.get("mood", 2.0) if weights else 2.0
+    w_energy = weights.get("energy_scale", 1.5) if weights else 1.5
+    w_acoustic = weights.get("acoustic", 1.0) if weights else 1.0
+
     score = 0.0
     reasons = []
 
     if song.get("genre") == user_prefs.get("genre"):
-        score += 3.0
+        score += w_genre
         reasons.append(f"genre matches ({song['genre']})")
 
     if song.get("mood") == user_prefs.get("mood"):
-        score += 2.0
+        score += w_mood
         reasons.append(f"mood matches ({song['mood']})")
 
     if "energy" in user_prefs:
         energy_diff = abs(song["energy"] - user_prefs["energy"])
-        energy_score = (1 - energy_diff) * 1.5
+        energy_score = (1 - energy_diff) * w_energy
         score += energy_score
         if energy_diff <= 0.15:
             reasons.append(f"energy closely matches ({song['energy']:.2f})")
 
     if user_prefs.get("likes_acoustic") and song["acousticness"] >= 0.6:
-        score += song["acousticness"] * 1.0
+        score += song["acousticness"] * w_acoustic
         reasons.append(f"acoustic feel ({song['acousticness']:.2f})")
 
     explanation = "Because: " + ", ".join(reasons) if reasons else "Closest overall match"
     return score, explanation
 
 
-def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
+def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5, weights: Optional[Dict] = None) -> List[Tuple[Dict, float, str]]:
     """
     Functional implementation of the recommendation logic.
     Required by src/main.py
 
     Scores every song, ranks by score descending, returns top k.
+    Pass optional `weights` dict to override default scoring weights.
     """
-    scored = [(*score_song(user_prefs, song), song) for song in songs]
+    scored = [(*score_song(user_prefs, song, weights), song) for song in songs]
     # scored items are (score, explanation, song) — repack as (song, score, explanation)
     results = [(song, score, explanation) for score, explanation, song in scored]
     results.sort(key=lambda x: x[1], reverse=True)
