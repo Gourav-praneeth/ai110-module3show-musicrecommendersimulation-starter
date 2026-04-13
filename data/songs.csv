@@ -1,19 +1,19 @@
-id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
-1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18
-2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71
-3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10
-4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86
-5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05
-6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92
-7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89
-8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
-9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
-10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
-11,Golden Block,City Verse,hip-hop,energetic,0.85,95,0.72,0.91,0.08
-12,Velvet Sunday,Mara & June,r&b,romantic,0.52,88,0.78,0.69,0.44
-13,Rain Sonata,Clara Voss,classical,melancholic,0.22,68,0.38,0.24,0.97
-14,Dirt Road Summer,The Hollow Pines,country,nostalgic,0.55,104,0.74,0.61,0.82
-15,Bass Cathedral,Frekwency,electronic,energetic,0.94,140,0.61,0.95,0.03
-16,Shatter Glass,Iron Veil,metal,intense,0.97,168,0.31,0.55,0.04
-17,Island Morning,Roots & Tide,reggae,uplifting,0.60,82,0.88,0.77,0.55
-18,Autumn Letters,The Paper Birds,folk,sad,0.33,74,0.42,0.45,0.91
+id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness,popularity,release_decade,mood_tags,instrumental,explicit
+1,Sunrise City,Neon Echo,pop,happy,0.82,118,0.84,0.79,0.18,78,2020s,uplifting|euphoric,False,False
+2,Midnight Coding,LoRoom,lofi,chill,0.42,78,0.56,0.62,0.71,65,2020s,focused|mellow,True,False
+3,Storm Runner,Voltline,rock,intense,0.91,152,0.48,0.66,0.10,72,2010s,aggressive|powerful,False,False
+4,Library Rain,Paper Lanterns,lofi,chill,0.35,72,0.60,0.58,0.86,58,2020s,peaceful|mellow,True,False
+5,Gym Hero,Max Pulse,pop,intense,0.93,132,0.77,0.88,0.05,85,2020s,aggressive|euphoric,False,False
+6,Spacewalk Thoughts,Orbit Bloom,ambient,chill,0.28,60,0.65,0.41,0.92,48,2020s,meditative|peaceful,True,False
+7,Coffee Shop Stories,Slow Stereo,jazz,relaxed,0.37,90,0.71,0.54,0.89,53,2010s,nostalgic|cozy,False,False
+8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22,70,2010s,nostalgic|moody,False,False
+9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78,62,2020s,focused|mellow,True,False
+10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35,68,2020s,uplifting|romantic,False,False
+11,Golden Block,City Verse,hip-hop,energetic,0.85,95,0.72,0.91,0.08,88,2020s,aggressive|euphoric,False,True
+12,Velvet Sunday,Mara & June,r&b,romantic,0.52,88,0.78,0.69,0.44,75,2020s,romantic|sensual,False,False
+13,Rain Sonata,Clara Voss,classical,melancholic,0.22,68,0.38,0.24,0.97,55,2020s,melancholic|peaceful,True,False
+14,Dirt Road Summer,The Hollow Pines,country,nostalgic,0.55,104,0.74,0.61,0.82,60,2010s,nostalgic|cozy,False,False
+15,Bass Cathedral,Frekwency,electronic,energetic,0.94,140,0.61,0.95,0.03,80,2020s,aggressive|euphoric,False,True
+16,Shatter Glass,Iron Veil,metal,intense,0.97,168,0.31,0.55,0.04,73,2010s,aggressive|powerful,False,False
+17,Island Morning,Roots & Tide,reggae,uplifting,0.60,82,0.88,0.77,0.55,63,2020s,uplifting|peaceful,False,False
+18,Autumn Letters,The Paper Birds,folk,sad,0.33,74,0.42,0.45,0.91,57,2020s,melancholic|nostalgic,False,False
